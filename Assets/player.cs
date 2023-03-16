@@ -12,12 +12,15 @@ public class player : MonoBehaviour
     public Transform verRot;
     public Transform horRot;
     public float MoveSpeed;
+    public GameObject gun ;
+    
         private Animator anim;
     // Use this for initialization
     void Start()
     {
        characterController =GetComponent<CharacterController>();
        anim =GetComponent<Animator>();
+        gun.SetActive(false);
     }
 
     // Update is called once per frame
@@ -67,7 +70,7 @@ public class player : MonoBehaviour
         if(Input.GetKey(KeyCode.D))
         {
             characterController.Move(this.gameObject.transform.right *MoveSpeed*Time.deltaTime);
-
+             anim.SetBool("isRunning", true);
         }
 
 
@@ -79,6 +82,21 @@ public class player : MonoBehaviour
 
         characterController.Move(Velocity);
         Velocity .y += Physics.gravity.y * Time.deltaTime;
+
+        if(Input.GetKey(KeyCode.B))
+        {
+            
+            anim.SetBool("Attack_gun", true);  
+            gun.SetActive(true);
+        }
+        
+
+
+            else if(Input.GetKeyUp(KeyCode.B))
+        {
+            anim.SetBool("Attack_gun", false);
+            gun.SetActive(false);
+        }
 
 
         if(characterController.isGrounded)
